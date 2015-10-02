@@ -4,10 +4,14 @@ from mininet.net import Mininet
 from mininet.node import RemoteController, OVSKernelSwitch
 from mininet.log import setLogLevel
 
-class tendril ( Topo ) :
+class tendril( Topo ) :
 	"""Create a leaf topology"""
 	
-	def build ( self, k=4, h=6 ):
+	def __init__( self, k=4, h=6 ):
+
+		# Initialize topology
+		Topo.__init__( self )
+		
 		spines = []
 		leaves = []
 		hosts = []
@@ -25,9 +29,9 @@ class tendril ( Topo ) :
 		i = 1
 		c = 0
 		while i <= k:
-			leaves.apeend(self.addSwitch('s1%d' % i ))
+			leaves.append(self.addSwitch('s1%d' % i ))
 			for spines in spines:
-				self.addLink(leaves[i-1], spine)
+				self.addLink(leaves[i-1], spines)
 
 			j = 1
 			while j <= h:
@@ -35,17 +39,18 @@ class tendril ( Topo ) :
 				self.addLink(hosts[c], leaves[i-1])
 				j += 1
 				c += 1
+
 			i += 1
 
 topos = { 'tendril': tendril } 
 
 def run():
 	topo = tendril()
-	net = Mininet ( topo= topo, controller = RemoteController, autoSetMacs = True)
+	net = Mininet ( topo=topo, controller=RemoteController, autoSetMacs=True)
 	net.start()
 	CLI( net )
 	net.stop()
 
-	if __name__ == '__main__':
-		setLogLevel( 'info' )
-		run()
+if __name__ == '__main__':
+	setLogLevel( 'info' )
+	run()
