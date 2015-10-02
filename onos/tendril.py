@@ -30,8 +30,8 @@ class tendril( Topo ) :
 		c = 0
 		while i <= k:
 			leaves.append(self.addSwitch('s1%d' % i ))
-			for spines in spines:
-				self.addLink(leaves[i-1], spines)
+			for s in spines:
+				self.addLink(leaves[i-1], s)
 
 			j = 1
 			while j <= h:
