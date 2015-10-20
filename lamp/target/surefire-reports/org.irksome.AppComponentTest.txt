@@ -1,0 +1,14 @@
+-------------------------------------------------------------------------------
+Test set: org.irksome.AppComponentTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.018 sec <<< FAILURE! - in org.irksome.AppComponentTest
+basics(org.irksome.AppComponentTest)  Time elapsed: 0.016 sec  <<< ERROR!
+java.lang.NullPointerException: null
+	at org.irksome.AppComponent.activate(AppComponent.java:77)
+	at org.irksome.AppComponentTest.setUp(AppComponentTest.java:32)
+
+basics(org.irksome.AppComponentTest)  Time elapsed: 0.018 sec  <<< ERROR!
+java.lang.NullPointerException: null
+	at org.irksome.AppComponent.deactivate(AppComponent.java:89)
+	at org.irksome.AppComponentTest.tearDown(AppComponentTest.java:38)
+

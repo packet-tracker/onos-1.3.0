@@ -1,0 +1,37 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1444907074822
+Build-Jdk: 1.8.0_51
+Built-By: nooyahs
+Bundle-Description: ONOS OSGi bundle archetype
+Bundle-ManifestVersion: 2
+Bundle-Name: irksome-lamp
+Bundle-SymbolicName: org.irksome.lamp
+Bundle-Version: 1.0.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: org.irksome;version="1.0.0";uses:="org.onosproject.cfg,o
+ rg.onosproject.core,org.onosproject.net.flow,org.onosproject.net.flowob
+ jective,org.onosproject.net.host,org.onosproject.net.packet,org.onospro
+ ject.net.topology"
+Import-Package: com.google.common.collect;version="[18.0,19)",org.onlab.
+ packet;version="[1.3,2)",org.onosproject.cfg;version="[1.3,2)",org.onos
+ project.core;version="[1.3,2)",org.onosproject.event;version="[1.3,2)",
+ org.onosproject.net;version="[1.3,2)",org.onosproject.net.flow;version=
+ "[1.3,2)",org.onosproject.net.flow.criteria;version="[1.3,2)",org.onosp
+ roject.net.flow.instructions;version="[1.3,2)",org.onosproject.net.flow
+ objective;version="[1.3,2)",org.onosproject.net.host;version="[1.3,2)",
+ org.onosproject.net.link;version="[1.3,2)",org.onosproject.net.packet;v
+ ersion="[1.3,2)",org.onosproject.net.topology;version="[1.3,2)",org.slf
+ 4j;version="[1.7,2)"
+Require-Capability: osgi.service;effective:=active;filter:="(objectClass
+ =org.onosproject.net.packet.PacketService)",osgi.service;effective:=act
+ ive;filter:="(objectClass=org.onosproject.net.flow.FlowRuleService)",os
+ gi.service;effective:=active;filter:="(objectClass=org.onosproject.cfg.
+ ComponentConfigService)",osgi.service;effective:=active;filter:="(objec
+ tClass=org.onosproject.net.host.HostService)",osgi.service;effective:=a
+ ctive;filter:="(objectClass=org.onosproject.net.topology.TopologyServic
+ e)",osgi.service;effective:=active;filter:="(objectClass=org.onosprojec
+ t.core.CoreService)",osgi.service;effective:=active;filter:="(objectCla
+ ss=org.onosproject.net.flowobjective.FlowObjectiveService)",osgi.ee;fil
+ ter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Service-Component: OSGI-INF/org.irksome.AppComponent.xml
+Tool: Bnd-2.3.0.201405100607
