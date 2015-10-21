@@ -1,0 +1,67 @@
+#!/bin/bash
+# -----------------------------------------------------------------------------
+# Remotely pushes bits to a remote node and installs ONOS on it.
+# -----------------------------------------------------------------------------
+
+[ ! -d "$ONOS_ROOT" ] && echo "ONOS_ROOT is not defined" >&2 && exit 1
+. $ONOS_ROOT/tools/build/envDefaults
+
+while getopts fnm: o; do
+    case "$o" in
+        f) uninstall=true;;
+        n) nostart=true;;
+        m) mvn_settings=$OPTARG;;
+    esac
+done
+let OPC=$OPTIND-1
+shift $OPC
+
+# If the -f was given, attempt uninstall first.
+[ -n "$uninstall" ] && onos-uninstall ${1:-$OCI}
+
+node=${1:-$OCI}
+remote=$ONOS_USER@$node
+
+$(dirname $0)/onos-push-bits $node
+
+[ ! -z "$mvn_settings" ] && scp -q $mvn_settings $remote:/tmp/settings.xml
+
+ssh $remote "
+    [ -d $ONOS_INSTALL_DIR/bin ] && echo \"ONOS is already installed\" && exit 1
+
+    # Prepare a landing zone and unroll the bits
+    sudo mkdir -p $ONOS_INSTALL_DIR && sudo chown ${ONOS_USER}:${ONOS_GROUP} $ONOS_INSTALL_DIR
+    tar zxmf /tmp/$ONOS_BITS.tar.gz -C $ONOS_INSTALL_DIR --strip-components=1
+
+    # Make a link to the log file directory and make a home for auxiliaries
+    ln -s $ONOS_INSTALL_DIR/$KARAF_DIST/data/log /opt/onos/log
+    mkdir $ONOS_INSTALL_DIR/var
+    mkdir $ONOS_INSTALL_DIR/config
+
+    # create dir for Raft log
+    # TODO: use $KARAF_DATA
+    mkdir -p -- $ONOS_INSTALL_DIR/$KARAF_DIST/data/raft
+
+    # Install the upstart configuration file and setup options for debugging
+    [ -z "$nostart" ] && sudo cp $ONOS_INSTALL_DIR/init/onos.conf /etc/init/onos.conf
+    echo 'export ONOS_OPTS=debug' > $ONOS_INSTALL_DIR/options
+
+    # Setup correct user to run onos-service
+    echo 'export ONOS_USER="${ONOS_USER:-sdn}"' >> $ONOS_INSTALL_DIR/options
+
+    # Remove any previous ON.Lab bits from ~/.m2 repo.
+    rm -fr ~/.m2/repository/org/onosproject
+
+    [ ! -z "$mvn_settings" ] && cp /tmp/settings.xml ~/.m2/settings.xml
+
+    # Drop log level for the console
+    echo "log4j.logger.org.apache.sshd = WARN" \
+        >> $ONOS_INSTALL_DIR/$KARAF_DIST/etc/org.ops4j.pax.logging.cfg
+
+"
+
+# Configure the ONOS installation
+onos-config $node
+
+# Unless -n option was given, attempt to ignite the ONOS service.
+[ -z "$nostart" ] && onos-service $node start

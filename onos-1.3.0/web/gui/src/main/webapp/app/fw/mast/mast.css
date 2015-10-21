@@ -1,0 +1,102 @@
+/*
+ * Copyright 2014,2015 Open Networking Laboratory
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/*
+ ONOS GUI -- Masthead -- CSS file
+ */
+
+#mast {
+    height: 36px;
+    padding: 4px;
+    vertical-align: baseline;
+}
+
+html[data-platform='iPad'] #mast {
+    padding-top: 16px;
+}
+
+.light #mast {
+    background-color: #bbb;
+    box-shadow: 0 2px 8px #777;
+}
+.dark #mast {
+    background-color: #444;
+    box-shadow: 0 2px 8px #222;
+}
+
+#mast .nav-menu-button {
+    width: 30px;
+    height: 30px;
+    margin-left: 8px;
+    margin-bottom: 4px;
+    cursor: pointer;
+}
+.light #mast .nav-menu-button:hover {
+    background-color: #ddd;
+}
+.dark #mast .nav-menu-button:hover {
+    background-color: #777;
+}
+
+#mast img.logo {
+    height: 38px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+#mast img.logo:hover {
+    /* need something better */
+    /*background-color: #888;*/
+}
+
+#mast .title {
+    font-size: 14pt;
+    font-style: italic;
+    vertical-align: 12px;
+}
+
+.light #mast .title {
+    color: #369;
+}
+.dark #mast .title {
+    color: #eee;
+}
+
+#mast-right {
+    display: inline-block;
+    padding-top: 8px;
+    padding-right: 16px;
+    float: right;
+    /*border: 1px solid red;*/
+}
+
+#mast-right a {
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.light #mast-right a {
+    color: #369;
+}
+.dark #mast-right a {
+    color: #eee;
+}
+
+#mast-right a:hover {
+    color: #CE5650;
+}

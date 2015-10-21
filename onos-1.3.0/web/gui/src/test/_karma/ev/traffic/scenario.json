@@ -1,0 +1,12 @@
+{
+  "comments": [
+    "Stepping through showTraffic"
+  ],
+  "title": "Show Traffic Scenario",
+  "params": {
+    "lastAuto": 15
+  },
+  "description": [
+    "Primary, secondary and animated link visualizations."
+  ]
+}
